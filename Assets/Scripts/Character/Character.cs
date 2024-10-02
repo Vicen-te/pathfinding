@@ -47,14 +47,14 @@ namespace Character
         /// </summary>
         private float cooldown;
 
-        [Header("Position"), Tooltip("Starting position of the character on the board")] 
-        [SerializeField] private Vector2Int startPosition; 
+        [Space(20)]
+        [SerializeField, Tooltip("Starting position of the character on the board")] 
+        private Vector2Int startingPosition; 
 
-        [Header("CountDown"), Tooltip("Delay before the next action (movement or update) is executed in the board")]
-        [SerializeField, Range(0f, 1f)] private float generatePathDelay = 0.02f;
+        [SerializeField, Range(0f, 1f), Tooltip("Interval delay between consecutive pathfinding calculations for the character")] 
+        private float pathGenerationDelay = 0.02f;
         
-        [Header("Key"), Tooltip("Indicates if the character is controlled by key input.")] 
-        [SerializeField] private bool keyControl;
+        [SerializeField, Tooltip("Indicates whether the character is controlled by keyboard input")] private bool keyboardControl;
         
         /// <summary>
         /// Indicates if the character is in manual control mode.
@@ -69,10 +69,10 @@ namespace Character
             get => isManualControl;
             set
             {
-                isManualControl = value; //< Sets the state of manual control
+                isManualControl = value; //< Sets the state of manual control.
                 
                 // Restart the pathfinding algorithm.
-                if (keyControl)
+                if (keyboardControl)
                 {
                     pathfinding?.Restart(board, visualBoard);
                 }
@@ -103,7 +103,7 @@ namespace Character
         private void OnValidate()
         {
             if(!Application.isPlaying) return;
-            IsManualControl = keyControl;
+            IsManualControl = keyboardControl;
         }
         
         /// <summary>
@@ -133,13 +133,13 @@ namespace Character
             locomotion = GetComponent<Locomotion>();
             pathfinding = GetComponentInChildren<Pathfinding.Pathfinding>();
 
-            if (board.Squares[startPosition.x, startPosition.y].TypeId == Square.Type.Wall)
+            if (board.Squares[startingPosition.x, startingPosition.y].TypeId == Square.Type.Wall)
             {
                 Debug.LogError("It can't start on a wall, change startPosition.");
                 Debug.Break();
             }
             
-            InitializePosition(startPosition);
+            InitializePosition(startingPosition);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace Character
         /// </summary>
         private void Update()
         {
-            if (!keyControl) //< If not in key control mode, update pathfinding.
+            if (!keyboardControl) //< If not in key control mode, update pathfinding.
             {
                 if (!pathfinding.IsFinished()) //< Check if the pathfinding has completed.
                 {
@@ -203,7 +203,7 @@ namespace Character
             cooldown -= Time.deltaTime; //< Decrease the cooldown by the time passed since the last frame.
                 
             if (!(cooldown < 0)) return; //< Exit if the cooldown hasn't expired.
-            cooldown = generatePathDelay; //< Reset cooldown for the next path calculation.
+            cooldown = pathGenerationDelay; //< Reset cooldown for the next path calculation.
                 
             pathfinding.CalculatePath(board, visualBoard); //< Calculate a path for the character.
         }

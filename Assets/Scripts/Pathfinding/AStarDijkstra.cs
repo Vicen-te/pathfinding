@@ -140,11 +140,11 @@ namespace Pathfinding
                 if (closedSet.Contains(neighbor) || dist <= currentNode.Value + 1) continue;
                 
                 // Update g and f values for the neighbor.
-                float gScore = currentNode.Value + 1; //< Increment cost for moving to this node
+                float gScore = currentNode.Value + 1; //< Increment cost for moving to this node.
 
-                gDictionary[neighbor] = gScore; // Increment cost for moving to this node.
-                fDictionary[neighbor] = gScore + CalculateH(neighbor); // Update f value.
-                Parent[neighbor.Id] = currentNode.Key; // Set the parent node for path reconstruction.
+                gDictionary[neighbor] = gScore; //< Increment cost for moving to this node.
+                fDictionary[neighbor] = gScore + CalculateH(neighbor); //< Update f value.
+                Parent[neighbor.Id] = currentNode.Key; //< Set the parent node for path reconstruction.
             }
         }
     }

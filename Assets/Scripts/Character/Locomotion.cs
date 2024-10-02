@@ -18,11 +18,11 @@ namespace Character
         /// </summary>
         public enum MovementDirection
         {
-            Up,    // Move upwards
-            Right, // Move to the right
-            Down,  // Move downwards
-            Left,  // Move to the left
-            None   // No movement
+            Up,    //< Move upwards.
+            Right, //< Move to the right.
+            Down,  //< Move downwards.
+            Left,  //< Move to the left.
+            None   //< No movement.
         }
 
         /// <summary>
@@ -78,26 +78,27 @@ namespace Character
             switch (movementDirection)
             {
                 case MovementDirection.Up:
-                    TargetSquare = board.Squares[TargetSquare.ColumnId, TargetSquare.RowId + 1]; // Move up
+                    TargetSquare = board.Squares[TargetSquare.ColumnId, TargetSquare.RowId + 1]; //< Move up.
                     break;
             
                 case MovementDirection.Left: 
-                    TargetSquare = board.Squares[TargetSquare.ColumnId - 1, TargetSquare.RowId]; // Move left
+                    TargetSquare = board.Squares[TargetSquare.ColumnId - 1, TargetSquare.RowId]; //< Move left.
                     break;
                 
                 case MovementDirection.Down: 
-                    TargetSquare = board.Squares[TargetSquare.ColumnId, TargetSquare.RowId - 1]; // Move down
+                    TargetSquare = board.Squares[TargetSquare.ColumnId, TargetSquare.RowId - 1]; //< Move down.
                     break;
                 
                 case MovementDirection.Right: 
-                    TargetSquare = board.Squares[TargetSquare.ColumnId + 1, TargetSquare.RowId]; // Move right
+                    TargetSquare = board.Squares[TargetSquare.ColumnId + 1, TargetSquare.RowId]; //< Move right.
                     break;
                 
                 case MovementDirection.None:
-                    break; // Do nothing if direction is None
+                    break; //< Do nothing if direction is None.
                 
                 default:
-                    throw new ArgumentOutOfRangeException($"NewDirection: {movementDirection}"); // Handle invalid direction
+                    // Handle invalid direction.
+                    throw new ArgumentOutOfRangeException($"NewDirection: {movementDirection}");
             }
         }
         
@@ -112,7 +113,7 @@ namespace Character
         /// </summary>
         public void ResetPosition()
         {
-            distanceTraveled = 0; // Reset distance traveled
+            distanceTraveled = 0; //< Reset distance traveled.
             CurrentSquare = TargetSquare; 
         }
 
@@ -123,13 +124,14 @@ namespace Character
         {
             if (distanceTraveled < 1)
             {
-                distanceTraveled += Time.deltaTime * movementSpeed; // Increment the distance traveled
-                rb.MovePosition(Vector2.Lerp(CurrentSquare.GetPosition, TargetSquare.GetPosition, distanceTraveled)); // Smoothly move to the target square position
+                distanceTraveled += Time.deltaTime * movementSpeed; //< Increment the distance traveled.
+                // Smoothly move to the target square position.
+                rb.MovePosition(Vector2.Lerp(CurrentSquare.GetPosition, TargetSquare.GetPosition, distanceTraveled)); 
             }
             else
             {
-                distanceTraveled = 1; // Ensure distance is capped at 1
-                rb.MovePosition(TargetSquare.GetPosition); // Move to the target square position
+                distanceTraveled = 1; //< Ensure distance is capped at 1.
+                rb.MovePosition(TargetSquare.GetPosition); //< Move to the target square position.
             }
         }
 

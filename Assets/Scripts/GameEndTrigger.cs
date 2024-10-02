@@ -15,7 +15,7 @@ public class GameEndTrigger : MonoBehaviour
     /// <param name="otherCollider">The collider that entered the trigger.</param>
     private void OnTriggerEnter2D(Collider2D otherCollider)
     {
-        HandleGameEnd(); // Handle the end of the game when the trigger is activated.
+        HandleGameEnd(); //< Handle the end of the game when the trigger is activated.
     }
 
     /// <summary>
@@ -24,9 +24,9 @@ public class GameEndTrigger : MonoBehaviour
     private static void HandleGameEnd()
     {
 #if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false; // Stop playing the game in the Unity Editor
+        UnityEditor.EditorApplication.isPlaying = false; //< Stop playing the game in the Unity Editor.
 #else
-        Application.Quit(); // Quit the application if not in the Unity Editor
+        Application.Quit(); //< Quit the application if not in the Unity Editor.
 #endif
     }
 }

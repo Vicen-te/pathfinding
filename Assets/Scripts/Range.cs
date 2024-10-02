@@ -14,8 +14,8 @@ using System;
 [Serializable]
 public struct Range
 {
-    public int min; // Minimum value in the range.
-    public int max; // Maximum value in the range.
+    public int min; //< Minimum value in the range.
+    public int max; //< Maximum value in the range.
         
     // Constructor for the Range struct.
     public Range(int min, int max)

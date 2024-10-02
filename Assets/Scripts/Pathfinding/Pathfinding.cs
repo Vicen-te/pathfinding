@@ -76,7 +76,7 @@ namespace Pathfinding
             // Generate the path and display the results.
             GeneratePath(visualBoard);
             
-            stopWatch.Stop(); // Stop the stopwatch.
+            stopWatch.Stop(); //< Stop the stopwatch.
             
             // Get the elapsed time as a TimeSpan value.
             TimeSpan ts = stopWatch.Elapsed;
@@ -100,7 +100,7 @@ namespace Pathfinding
             Parent = new Dictionary<string, Square>();
             PathStack = new Stack<Square>();
             stopWatch = new Stopwatch();
-            stopWatch.Start(); // Start measuring time.
+            stopWatch.Start(); //< Start measuring time.
         }
 
         /// <summary>
@@ -111,8 +111,8 @@ namespace Pathfinding
         /// <returns>The direction of movement as a <see cref="Locomotion.MovementDirection"/>.</returns>
         private static Locomotion.MovementDirection CheckDirection(Square currentSquare, Square lastSquare)
         {
-            float x = currentSquare.GetPosition.x - lastSquare.GetPosition.x; // Calculate the x difference.
-            float y = currentSquare.GetPosition.y - lastSquare.GetPosition.y; // Calculate the y difference.
+            float x = currentSquare.GetPosition.x - lastSquare.GetPosition.x; //< Calculate the x difference.
+            float y = currentSquare.GetPosition.y - lastSquare.GetPosition.y; //< Calculate the y difference.
     
             // Determine the direction based on the greater distance.
             return Mathf.Abs(x) > Mathf.Abs(y)
@@ -129,9 +129,10 @@ namespace Pathfinding
             // Return None if there are no more squares in the stack (no solution).
             if (PathStack.Count <= 0) return Locomotion.MovementDirection.None;
 
-            Square currentSquare = PathStack.Pop(); // Get the current square from the stack.
-            Locomotion.MovementDirection movementDirection = CheckDirection(currentSquare, lastSquare); // Determine the movement direction.
-            lastSquare = currentSquare; // Update the last square to the current square.
+            Square currentSquare = PathStack.Pop(); //< Get the current square from the stack.
+            // Determine the movement direction.
+            Locomotion.MovementDirection movementDirection = CheckDirection(currentSquare, lastSquare); 
+            lastSquare = currentSquare; //< Update the last square to the current square.
             return movementDirection;
         }
 
@@ -147,9 +148,9 @@ namespace Pathfinding
             // Trace back through the parent nodes to generate the full path.
             while (node != null && node != StartNode)
             {
-                PathStack.Push(node); // Push the current node onto the stack.
-                node = Parent[node.Id]; // Move to the parent node.
-                SetSelectedPathColor(visualBoard, node); // Set the color for the current node.
+                PathStack.Push(node); //< Push the current node onto the stack.
+                node = Parent[node.Id]; //< Move to the parent node.
+                SetSelectedPathColor(visualBoard, node); //< Set the color for the current node.
             }
         }
 
@@ -165,10 +166,10 @@ namespace Pathfinding
         /// <param name="visualBoard">The visual representation of the board.</param>
         public void Restart(Board.Board board, GameObject[,] visualBoard) 
         {
-            isFinished = false; // Reset the finish flag.
+            isFinished = false; //< Reset the finish flag.
             
-            const float grey = 122.0f / 255; // Define a grey color value.
-            foreach (var square in board.Squares) // Loop through each square on the board.
+            const float grey = 122.0f / 255; //< Define a grey color value.
+            foreach (var square in board.Squares) //< Loop through each square on the board.
             {
                 // Change the color of non-wall squares to grey.
                 if (square.TypeId != Square.Type.Wall)
@@ -183,7 +184,7 @@ namespace Pathfinding
         /// </summary>
         /// <param name="currentNode">The current node being checked.</param>
         /// <returns>True if the current node is the end node, otherwise false.</returns>
-        protected bool IsAtEndNode(Square currentNode) => currentNode == EndNode; // Return true if the current node is the end node.
+        protected bool IsAtEndNode(Square currentNode) => currentNode == EndNode; //< Return true if the current node is the end node.
         
         /// <summary>
         /// Changes the color of the visual representation of a square.
@@ -193,10 +194,10 @@ namespace Pathfinding
         /// <param name="color">The new color to apply.</param>
         private static void ChangeColor(GameObject[,] visualBoard, Square square, Color color)
         {
-            GameObject squareGameObject = visualBoard[square.ColumnId, square.RowId]; // Get the GameObject from the visual board 
+            GameObject squareGameObject = visualBoard[square.ColumnId, square.RowId]; //< Get the GameObject from the visual board 
             // Change the color of the square's sprite renderer if it exists.
             if (squareGameObject.transform.GetChild(0).TryGetComponent(out SpriteRenderer spriteRenderer))
-                spriteRenderer.color = color; // Apply the new color.
+                spriteRenderer.color = color; //< Apply the new color.
         }
 
         /// <summary>

@@ -144,7 +144,7 @@ namespace Pathfinding
 
             foreach (Square neighbor in neighbors)
             {
-                float gScore = gDictionary[lowestFNode.Id] + 1; //< Increment cost for moving to this node
+                float gScore = gDictionary[lowestFNode.Id] + 1; //< Increment cost for moving to this node.
                 if (!openSet.Contains(neighbor))
                 {
                     UpdateNodeScores(neighbor, gScore);
